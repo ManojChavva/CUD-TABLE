@@ -31,6 +31,8 @@
         }
     </style>
 </head>
+  <h> CUD TABLE </h>
+
 <body>
 
     <div id="container" style="width:700px;"></div>
