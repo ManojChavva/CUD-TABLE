@@ -9,7 +9,7 @@
         }
         table, th, td, tr 
         {
-            border: solid 1px #050505;
+            border: solid 1px black;
             border-collapse: collapse;
             padding: 2px 3px;
             text-align: center;
@@ -19,13 +19,13 @@
         {
             cursor: pointer;
             border: none;
-            color: #black;
+            color: black;
         }
         
         input[type='text'], select 
         {
             text-align: center;
-            border: solid 1px #black;
+            border: solid 1px blue;
             width: auto;
             padding: 2px 3px;
         }
@@ -35,7 +35,7 @@
 
 <body>
 
-    <div id="container" style="width:700px;"></div>
+    <div id="container" style="width:100px;"></div>
 </body>
 
 <script>
@@ -43,8 +43,8 @@
 
         // Creating a json data for the required table.
         this.jsonData = [
-            { ID: '1', Name: 'Manoj', Address: 'Guntur', Mobile: 7013968556 },
-            { ID: '2', Name: 'Kumar', Address: 'Sattenapalli', Mobile: 1234567890 },
+            { ID: '1', Name:'Manoj', Address: 'Guntur', Mobile: 7013968556 },
+            { ID: '2', Name: 'Kumar', Address:'Sattenapalli', Mobile: 1234567890 },
             { ID: '3', Name: 'Reddy', Address: 'Chennai', Mobile: 98745632123 }
         ]
 
