@@ -9,7 +9,7 @@
         }
         table, th, td, tr 
         {
-            border: solid 1px black;
+            border: solid 1px #050505;
             border-collapse: collapse;
             padding: 2px 3px;
             text-align: center;
@@ -31,11 +31,8 @@
         }
     </style>
 </head>
-  <h> CUD TABLE </h>
-
 <body>
-
-    <div id="container" style="width:100px;"></div>
+    <div id="Tablespace" style="width:500px;"></div>
 </body>
 
 <script>
@@ -43,8 +40,8 @@
 
         // Creating a json data for the required table.
         this.jsonData = [
-            { ID: '1', Name:'Manoj', Address: 'Guntur', Mobile: 7013968556 },
-            { ID: '2', Name: 'Kumar', Address:'Sattenapalli', Mobile: 1234567890 },
+            { ID: '1', Name: 'Manoj', Address: 'Guntur', Mobile: 7013968556 },
+            { ID: '2', Name: 'Kumar', Address: 'Sattenapalli', Mobile: 1234567890 },
             { ID: '3', Name: 'Reddy', Address: 'Chennai', Mobile: 98745632123 }
         ]
 
@@ -91,20 +88,16 @@
 
                 this.td = document.createElement('td')
 				
-				
-        
-        
-        
-        
-        /*//Sort option
-				th.appendChild(this.th);
-              
+				/*//Sort option
+				th.appendChild(this.td);
+                var lblCancel = document.createElement('label');
+                lblCancel.innerHTML = '&#128473';
+                lblCancel.setAttribute('onclick', 'detailInfo.Cancel(this)');
+                lblCancel.setAttribute('style', 'display:none;');
+                lblCancel.setAttribute('title', 'Cancel');
+                lblCancel.setAttribute('id', 'lbl' + i);
+                this.td.appendChild(lblCancel);
 				*/
-        
-        
-        
-        
-        
 
                 // *** CANCEL OPTION.
                 tr.appendChild(this.td);
@@ -205,7 +198,7 @@
             btNew.setAttribute('onclick', 'detailInfo.CreateNew(this)');       // ADD THE BUTTON's 'onclick' EVENT.
             this.td.appendChild(btNew);
 
-            var div = document.getElementById('container');
+            var div = document.getElementById('Tablespace');
             div.innerHTML = '';
             div.appendChild(table);    // ADD THE TABLE TO THE WEB PAGE.
         };
@@ -242,7 +235,21 @@
             var activeRow = oButton.parentNode.parentNode.rowIndex;
             var tab = document.getElementById('infoTable').rows[activeRow];
 
+        
+
+
+		for (i = 1; i < 4; i++) {
+			var td = tab.getElementsByTagName("td")[i];
+                    var ele = document.createElement('input');      // TEXTBOX.
+                    ele.setAttribute('type', 'text');
+                    ele.setAttribute('value', td.innerText);
+                    td.innerText = '';
+                    td.appendChild(ele);
+                }
             
+
+
+		
             var lblCancel = document.getElementById('lbl' + (activeRow - 1));
             lblCancel.setAttribute('style', 'cursor:pointer; display:block; width:20px; float:left; position: absolute;');
 
