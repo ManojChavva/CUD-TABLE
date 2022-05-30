@@ -29,7 +29,12 @@
             width: auto;
             padding: 2px 3px;
         }
-    </style>
+		
+		<button id=”sort-btn” type=”button” class=”btn btn-secondary”>Sort Reviews</button>
+    
+	</style>
+	
+	
 </head>
 <body>
     <div id="Tablespace" style="width:500px;"></div>
@@ -52,15 +57,21 @@
 
             // Naming the Headers of the table.
             for (var i = 0; i < this.jsonData.length; i++) {
-                for (var key in this.jsonData[i]) {
-                    if (this.col.indexOf(key) === -1) {
-                        this.col.push(key);
+		    for (var key in this.jsonData[0]) {
+			if (this.col.indexOf(key) === -1) {
+			this.col.push(key);
                     }
                 }
             }
 			
-			
+		
+			/*const sortReviewButton = document.querySelector("#sort-btn")
+	sortReviewButton.addEventListener("click",(e) = {
+	sortReviews()
+	})*/
 
+			
+			
             // Generating the table.
             var table = document.createElement('table');
             table.setAttribute('id', 'infoTable');     // Seet table id.
@@ -73,7 +84,10 @@
                 th.innerHTML = this.col[h].replace('_', ' ');
                 tr.appendChild(th);
             }
-
+			
+			
+			
+			
             // Add rows using JSON data.
             for (var i = 0; i < this.jsonData.length; i++) {
 
@@ -83,23 +97,22 @@
                     var tabCell = tr.insertCell(-1);
                     tabCell.innerHTML = this.jsonData[i][this.col[j]];
                 }
+			
+				this.td = document.createElement('th');
+                //tr.appendChild(this.td);
+                var btDelete = document.createElement('input');
+                btDelete.setAttribute('type', 'button');    // SET INPUT ATTRIBUTE.
+                btDelete.setAttribute('value', 'Delete');
+                btDelete.setAttribute('style', 'background-color:#ED5650;');
+                btDelete.setAttribute('onclick', 'detailInfo.Delete(this)');   // ADD THE BUTTON's 'onclick' EVENT.
+                this.td.appendChild(btDelete);
+				
+
 
                 // Dynamically create and add elements to table cells with events.
-
-                this.td = document.createElement('td')
 				
-				/*//Sort option
-				th.appendChild(this.td);
-                var lblCancel = document.createElement('label');
-                lblCancel.innerHTML = '&#128473';
-                lblCancel.setAttribute('onclick', 'detailInfo.Cancel(this)');
-                lblCancel.setAttribute('style', 'display:none;');
-                lblCancel.setAttribute('title', 'Cancel');
-                lblCancel.setAttribute('id', 'lbl' + i);
-                this.td.appendChild(lblCancel);
-				*/
-
-                // *** CANCEL OPTION.
+				this.td = document.createElement('td');
+				 // *** CANCEL OPTION.
                 tr.appendChild(this.td);
                 var lblCancel = document.createElement('label');
                 lblCancel.innerHTML = '&#128473';
@@ -124,6 +137,7 @@
                 this.td.appendChild(btSave);
 
                 // *** UPDATE.
+				
                 tr.appendChild(this.td);
                 var btUpdate = document.createElement('input');
 
@@ -149,21 +163,19 @@
 
 
 
-			// **** create 
-			// unabe to create the next row
+				// **** create 
+				// unabe to create the next row
 				var btNew = document.createElement('input');
-
-            btNew.setAttribute('type', 'button');       // SET ATTRIBUTES.
-            btNew.setAttribute('value', 'Create');
-            btNew.setAttribute('id', 'New' + i);
-            btNew.setAttribute('style', 'background-color:#207DD1;');
-            btNew.setAttribute('onclick', 'detailInfo.CreateNew(this)');       // ADD THE BUTTON's 'onclick' EVENT.
-            this.td.appendChild(btNew);
-				
+				this.td = document.createElement('th');
+                tr.appendChild(this.td);
+				btNew.setAttribute('type', 'button');       // SET ATTRIBUTES.
+				btNew.setAttribute('value', 'Insert');
+				btNew.setAttribute('id', 'New' + i);
+				btNew.setAttribute('style', 'background-color:#207DD1;');
+				btNew.setAttribute('onclick', 'detailInfo.Insert(this)');       // ADD THE BUTTON's 'onclick' EVENT.
+				this.td.appendChild(btNew);
+					
 	
-
-
-
 
 
 				
@@ -284,7 +296,33 @@
         }
 
 
+			this.Insert = function (oButton) {
+            var activeRow = oButton.parentNode.parentNode.rowIndex;
+            var tab = document.getElementById('infoTable').rows[activeRow];
+            var obj = {};
 
+            // ADD NEW VALUE TO jsonData ARRAY.
+            for (i = 0; i < this.col.length; i++) {
+                var td = tab.getElementsByTagName("td")[i];
+                 {      
+                    var txtVal = td.childNodes[0].value;
+                    if (txtVal != '') {
+                        obj[this.col[i]] = txtVal.trim();
+                    }
+                    else {
+                        obj = '';
+                        alert('all fields are compulsory');
+                        break;
+                    }
+                }
+            }
+            obj[this.col[0]] = this.jsonData.length + 1;     // NEW ID.
+
+            if (Object.keys(obj).length > 0) {      // CHECK IF OBJECT IS NOT EMPTY.
+                this.jsonData.push(obj);             // PUSH (ADD) DATA TO THE JSON ARRAY.
+                this.createTable();                 // REFRESH THE TABLE.
+            }
+        }
 
 
 
@@ -325,6 +363,8 @@
 
 
 <script>
+
+
 /* function sortTable(n) {
   var createTable,
     
