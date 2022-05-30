@@ -30,7 +30,7 @@
             padding: 2px 3px;
         }
 		
-		<button id=”sort-btn” type=”button” class=”btn btn-secondary”>Sort Reviews</button>
+		<button id="sort-btn" type="button" class="btn btn-secondary">Sort </button>
     
 	</style>
 	
@@ -58,8 +58,9 @@
             // Naming the Headers of the table.
             for (var i = 0; i < this.jsonData.length; i++) {
 		    for (var key in this.jsonData[0]) {
-			if (this.col.indexOf(key) === -1) {
+              if (this.col.indexOf(key) === -1) {
 			this.col.push(key);
+             
                     }
                 }
             }
@@ -98,7 +99,7 @@
                     tabCell.innerHTML = this.jsonData[i][this.col[j]];
                 }
 			
-				this.td = document.createElement('th');
+				this.td = document.createElement('tr');
                 //tr.appendChild(this.td);
                 var btDelete = document.createElement('input');
                 btDelete.setAttribute('type', 'button');    // SET INPUT ATTRIBUTE.
@@ -145,7 +146,10 @@
                 btUpdate.setAttribute('value', 'Update');
                 btUpdate.setAttribute('id', 'Edit' + i);
                 btUpdate.setAttribute('style', 'background-color:#44CCEB;');
-                btUpdate.setAttribute('onclick', 'detailInfo.Update(this)');   // ADD THE BUTTON's 'onclick' EVENT.
+                btUpdate.setAttribute('onclick', 'detailInfo.Update(this)');  
+              
+              
+              // ADD THE BUTTON's 'onclick' EVENT.
                 this.td.appendChild(btUpdate);
 
                 // *** DELETE.
@@ -156,6 +160,15 @@
                 btDelete.setAttribute('value', 'Delete');
                 btDelete.setAttribute('style', 'background-color:#ED5650;');
                 btDelete.setAttribute('onclick', 'detailInfo.Delete(this)');   // ADD THE BUTTON's 'onclick' EVENT.
+                this.td.appendChild(btDelete);
+              
+              this.td = document.createElement('th');
+                tr.appendChild(this.td);
+                var btDelete = document.createElement('input');
+                btDelete.setAttribute('type', 'button');    // SET INPUT ATTRIBUTE.
+                btDelete.setAttribute('value', 'Sort');
+                btDelete.setAttribute('style', 'background-color:green;');
+                btDelete.setAttribute('onclick', 'detailInfo.Sort(this)');   // ADD THE BUTTON's 'onclick' EVENT.
                 this.td.appendChild(btDelete);
 				
 			
@@ -324,7 +337,10 @@
             }
         }
 
-
+		//Sort
+             this.Sort = function (oButton) {
+               
+             }
 
         // CREATE NEW.
         this.CreateNew = function (oButton) {
