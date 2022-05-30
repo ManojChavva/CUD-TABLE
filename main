@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    
     <title>Assignment task</title>
     <style>
         table 
@@ -244,7 +245,7 @@
 
             // SHOW THE UPDATE BUTTON AGAIN.
             var btUpdate = document.getElementById('Edit' + (activeRow - 1));
-            btUpdate.setAttribute('style', 'display:block; margin:0 auto; background-color:#yellowgreen;');
+            btUpdate.setAttribute('style', 'display:block; margin:0 auto; background-color: yellowgreen;');
 
             var tab = document.getElementById('infoTable').rows[activeRow];
 
@@ -315,7 +316,7 @@
             var obj = {};
 
             // ADD NEW VALUE TO jsonData ARRAY.
-            for (i = 0; i < this.col.length; i++) {
+           /* for (i = 0; i < this.col.length; i++) {
                 var td = tab.getElementsByTagName("td")[i];
                  {      
                     var txtVal = td.childNodes[0].value;
@@ -328,7 +329,7 @@
                         break;
                     }
                 }
-            }
+            }*/
             obj[this.col[0]] = this.jsonData.length + 1;     // NEW ID.
 
             if (Object.keys(obj).length > 0) {      // CHECK IF OBJECT IS NOT EMPTY.
