@@ -1,29 +1,75 @@
 <!DOCTYPE html>
 <html>
 <head>
-    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <title>Assignment task</title>
     <style>
-        table 
+	
+	@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
+
+
+
+body {
+	font-family: "Roboto", Arial, sans-serif;
+	min-height: 100vh;
+	background-color: white;
+}
+
+header {
+	position: fixed;
+	width: 100%;
+	
+}
+
+
+header::before {
+	content: "";
+	display: block;
+	position: absolute;
+	left: 0;
+	bottom: 6em;
+	width: 100%;
+	height: calc(var(--heading-height) + 10em);
+	z-index: -1;
+	transform: skewY(-3.5deg);
+	background: 
+		linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
+		url(https://images.unsplash.com/photo-1495464101292-552d0b52fe41?auto=format&fit=crop&w=1350&q=80) no-repeat center,
+		linear-gradient(#4e4376, #2b5876);
+	background-size: cover;
+	border-bottom: .2em solid #fff;
+}
+
+   table 
         {
             width: 100%;
         }
-        table, th, td, tr 
+	th {
+		border: solid 1px #050505;
+		 padding-top: 12px;
+         padding-bottom: 12px;
+         background-color: coral;
+		 padding: 8px;
+		}
+  
+           
+           tr:nth-child(even) {background-color: #f2f2f2;}
+
+		   tr:hover {background-color: coral;}
+
+		table, td, tr 
         {
-            border: solid 1px #050505;
-            border-collapse: collapse;
-            padding: 2px 3px;
-            text-align: center;
+			
+		   border: solid 1px #050505;
+           text-align: center;
         }
       
-        input[type='button'] 
-        {
-            cursor: pointer;
-            border: none;
-            color: black;
-        }
         
-        input[type='text'], select 
+        
+        input[type='text'],  
         {
             text-align: center;
             border: solid 1px blue;
@@ -31,14 +77,20 @@
             padding: 2px 3px;
         }
 		
-		<button id="sort-btn" type="button" class="btn btn-secondary">Sort </button>
-    
+		
+h1 {
+text-align: center;
+  font-family: "Times New Roman", Times, serif;
+}    
 	</style>
 	
-	
-</head>
+
+</head> 
 <body>
-    <div id="Tablespace" style="width:500px;"></div>
+
+      <h1> Information Table</h1> 
+    <center><div id="Tablespace" style="width:900px;"></div></center>
+	
 </body>
 
 <script>
@@ -46,13 +98,13 @@
 
         // Creating a json data for the required table.
         this.jsonData = [
-            { ID: '1', Name: 'Manoj', Address: 'Guntur', Mobile: 7013968556 },
-            { ID: '2', Name: 'Kumar', Address: 'Sattenapalli', Mobile: 1234567890 },
-            { ID: '3', Name: 'Reddy', Address: 'Chennai', Mobile: 98745632123 }
+            { ID: '4', Name: 'Manoj', Address: 'Guntur', Mobile: '7013968556' },
+            { ID: '2', Name: 'Kumar', Address: 'Sattenapalli', Mobile: '1234567890' },
+            { ID: '3', Name: 'Reddy', Address: 'Chennai', Mobile: '98745632123' }
         ]
 
 
-        this.col = [];
+       this.col = [];
 
         this.createTable = function () {
 
@@ -67,28 +119,26 @@
             }
 			
 		
-			/*const sortReviewButton = document.querySelector("#sort-btn")
-	sortReviewButton.addEventListener("click",(e) = {
-	sortReviews()
-	})*/
-
-			
-			
             // Generating the table.
             var table = document.createElement('table');
             table.setAttribute('id', 'infoTable');     // Seet table id.
-
-            var tr = table.insertRow(-1);               // Create a row (for header).
-
-            for (var h = 0; h < this.col.length; h++) {
+			 
+                var tr = table.insertRow(-1);               // Create a row (for header).
+                for (var h = 0; h < this.col.length; h++) {
                 // Add table header.
                 var th = document.createElement('th');
-                th.innerHTML = this.col[h].replace('_', ' ');
+				var btSort = document.createElement('button');
+				btSort.innerText = 'Sort';
+                btSort.setAttribute('value', 'Sort '+this.col[h]);
+                //btSort.setAttribute('style', 'background-color:aqua;');
+                btSort.setAttribute('onclick', 'detailInfo.Sort(this)'); 
+                th.innerHTML = this.col[h];
+				th.appendChild(btSort);
+				
+				
                 tr.appendChild(th);
             }
-			
-			
-			
+		
 			
             // Add rows using JSON data.
             for (var i = 0; i < this.jsonData.length; i++) {
@@ -100,12 +150,12 @@
                     tabCell.innerHTML = this.jsonData[i][this.col[j]];
                 }
 			
-				this.td = document.createElement('tr');
+				this.td = document.createElement('td');
                 //tr.appendChild(this.td);
                 var btDelete = document.createElement('input');
                 btDelete.setAttribute('type', 'button');    // SET INPUT ATTRIBUTE.
                 btDelete.setAttribute('value', 'Delete');
-                btDelete.setAttribute('style', 'background-color:#ED5650;');
+               // btDelete.setAttribute('style', 'background-color:#ED5650;');
                 btDelete.setAttribute('onclick', 'detailInfo.Delete(this)');   // ADD THE BUTTON's 'onclick' EVENT.
                 this.td.appendChild(btDelete);
 				
@@ -146,7 +196,7 @@
                 btUpdate.setAttribute('type', 'button');    // SET ATTRIBUTES.
                 btUpdate.setAttribute('value', 'Update');
                 btUpdate.setAttribute('id', 'Edit' + i);
-                btUpdate.setAttribute('style', 'background-color:#44CCEB;');
+               // btUpdate.setAttribute('style', 'background-color:#44CCEB;');
                 btUpdate.setAttribute('onclick', 'detailInfo.Update(this)');  
               
               
@@ -154,51 +204,34 @@
                 this.td.appendChild(btUpdate);
 
                 // *** DELETE.
-                this.td = document.createElement('th');
+                this.td = document.createElement('td');
                 tr.appendChild(this.td);
                 var btDelete = document.createElement('input');
                 btDelete.setAttribute('type', 'button');    // SET INPUT ATTRIBUTE.
                 btDelete.setAttribute('value', 'Delete');
-                btDelete.setAttribute('style', 'background-color:#ED5650;');
+               // btDelete.setAttribute('style', 'background-color:#ED5650;');
                 btDelete.setAttribute('onclick', 'detailInfo.Delete(this)');   // ADD THE BUTTON's 'onclick' EVENT.
                 this.td.appendChild(btDelete);
-              
-              this.td = document.createElement('th');
-                tr.appendChild(this.td);
-                var btDelete = document.createElement('input');
-                btDelete.setAttribute('type', 'button');    // SET INPUT ATTRIBUTE.
-                btDelete.setAttribute('value', 'Sort');
-                btDelete.setAttribute('style', 'background-color:green;');
-                btDelete.setAttribute('onclick', 'detailInfo.Sort(this)');   // ADD THE BUTTON's 'onclick' EVENT.
-                this.td.appendChild(btDelete);
-				
-			
-
-
-
-
-				// **** create 
+             
+				// **** Insert 
 				// unabe to create the next row
 				var btNew = document.createElement('input');
-				this.td = document.createElement('th');
+				this.td = document.createElement('td');
                 tr.appendChild(this.td);
 				btNew.setAttribute('type', 'button');       // SET ATTRIBUTES.
 				btNew.setAttribute('value', 'Insert');
 				btNew.setAttribute('id', 'New' + i);
-				btNew.setAttribute('style', 'background-color:#207DD1;');
+				//btNew.setAttribute('style', 'background-color:#207DD1;');
 				btNew.setAttribute('onclick', 'detailInfo.Insert(this)');       // ADD THE BUTTON's 'onclick' EVENT.
 				this.td.appendChild(btNew);
 					
 	
-
-
-				
             }
 
 
             // ADD A ROW AT THE END WITH BLANK TEXTBOXES (FOR NEW ENTRY).
 
-            tr = table.insertRow(-1);           // CREATE THE LAST ROW.
+          /*  tr = table.insertRow(-1);           // CREATE THE LAST ROW.
 
             for (var j = 0; j < this.col.length; j++) {
                 var newCell = tr.insertCell(-1);
@@ -222,7 +255,7 @@
             btNew.setAttribute('id', 'New' + i);
             btNew.setAttribute('style', 'background-color:#207DD1;');
             btNew.setAttribute('onclick', 'detailInfo.CreateNew(this)');       // ADD THE BUTTON's 'onclick' EVENT.
-            this.td.appendChild(btNew);
+            this.td.appendChild(btNew); */
 
             var div = document.getElementById('Tablespace');
             div.innerHTML = '';
@@ -261,9 +294,6 @@
             var activeRow = oButton.parentNode.parentNode.rowIndex;
             var tab = document.getElementById('infoTable').rows[activeRow];
 
-        
-
-
 		for (i = 1; i < 4; i++) {
 			var td = tab.getElementsByTagName("td")[i];
                     var ele = document.createElement('input');      // TEXTBOX.
@@ -293,6 +323,30 @@
             this.jsonData.splice((activeRow - 1), 1);    // DELETE THE ACTIVE ROW.
             this.createTable();                         // REFRESH THE TABLE.
         };
+		
+		
+		
+		//Sort function  
+			 this.Sort = function (oButton) {
+			 
+			   detailInfo.jsonData.sort(function (a, b) {
+			  
+			   if(oButton.value == "Sort ID")
+			   	     return a.ID.localeCompare(b.ID);
+			   else if(oButton.value == "Sort Name")
+		return a.Name.localeCompare(b.Name);
+			   else if(oButton.value == "Sort Address")
+			     return a.Address.localeCompare(b.Address);
+			   else if(oButton.value == "Sort Mobile")
+			      return a.Mobile.localeCompare(b.Mobile);
+			   
+  
+});
+detailInfo.createTable(detailInfo.jsonData);
+
+
+			 };
+
 
         // SAVE DATA.
         this.Save = function (oButton) {
@@ -316,20 +370,13 @@
             var obj = {};
 
             // ADD NEW VALUE TO jsonData ARRAY.
-           /* for (i = 0; i < this.col.length; i++) {
+          for (i = 0; i < this.col.length; i++) {
                 var td = tab.getElementsByTagName("td")[i];
                  {      
                     var txtVal = td.childNodes[0].value;
-                    if (txtVal != '') {
-                        obj[this.col[i]] = txtVal.trim();
-                    }
-                    else {
-                        obj = '';
-                        alert('all fields are compulsory');
-                        break;
-                    }
+                    
                 }
-            }*/
+            }
             obj[this.col[0]] = this.jsonData.length + 1;     // NEW ID.
 
             if (Object.keys(obj).length > 0) {      // CHECK IF OBJECT IS NOT EMPTY.
@@ -337,14 +384,25 @@
                 this.createTable();                 // REFRESH THE TABLE.
             }
         }
-
-		//Sort
-             this.Sort = function (oButton) {
-               
-             }
+		
+		
+		
 
         // CREATE NEW.
         this.CreateNew = function (oButton) {
+		tr = table.insertRow(-1);         // CREATE THE LAST ROW.
+
+            for (var j = 0; j < this.col.length; j++) {
+                var newCell = tr.insertCell(-1);
+                if (j >= 1) {
+
+                    
+                        var tBox = document.createElement('input');          // CREATE AND ADD A TEXTBOX.
+                        tBox.setAttribute('type', 'text');
+                        tBox.setAttribute('value', '');
+                        newCell.appendChild(tBox);
+                    }
+            }
             var activeRow = oButton.parentNode.parentNode.rowIndex;
             var tab = document.getElementById('infoTable').rows[activeRow];
             var obj = {};
@@ -376,62 +434,6 @@
     }
     detailInfo.createTable();
 </script>
-
-
-
-<script>
-
-
-/* function sortTable(n) {
-  var createTable,
-    
-  createTable = document.getElementById("myTable");
-  switching = true;
-  
-  dir = "asc";
-  //Make a loop that will continue until no switching has been done:
-  while (switching) {
-    
-    switching = false;
-    rows = table.getElementsByTagName("TR");
-    
-    for (i = 1; i < rows.length - 1; i++) { 
-      shouldSwitch = false;
-      
-      x = rows[i].getElementsByTagName("TD")[n];
-      y = rows[i + 1].getElementsByTagName("TD")[n];
-      
-      if (dir == "asc") {
-        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-          shouldSwitch = true;
-          break;
-        }
-      } else if (dir == "desc") {
-        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-          
-          shouldSwitch = true;
-          break;
-        }
-      }
-    }
-    if (shouldSwitch) {
-     
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-      
-      switchcount++;
-    } else {
-      
-      if (switchcount == 0 && dir == "asc") {
-        dir = "desc";
-        switching = true;
-      }
-    }
-  }
-} */
-</script>
-
-
 
 
 </html>
