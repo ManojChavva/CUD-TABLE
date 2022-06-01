@@ -18,29 +18,7 @@ body {
 	background-color: white;
 }
 
-header {
-	position: fixed;
-	width: 100%;
-	
-}
 
-
-header::before {
-	content: "";
-	display: block;
-	position: absolute;
-	left: 0;
-	bottom: 6em;
-	width: 100%;
-	height: calc(var(--heading-height) + 10em);
-	z-index: -1;
-	transform: skewY(-3.5deg);
-	background: 
-		linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
-		url(https://images.unsplash.com/photo-1495464101292-552d0b52fe41?auto=format&fit=crop&w=1350&q=80) no-repeat center,
-		linear-gradient(#4e4376, #2b5876);
-	background-size: cover;
-	border-bottom: .2em solid #fff;
 }
 
    table 
@@ -49,8 +27,7 @@ header::before {
         }
 	th {
 		border: solid 1px #050505;
-		 padding-top: 12px;
-         padding-bottom: 12px;
+		
          background-color: coral;
 		 padding: 8px;
 		}
@@ -58,12 +35,12 @@ header::before {
            
            tr:nth-child(even) {background-color: #f2f2f2;}
 
-		   tr:hover {background-color: coral;}
+		   tr:hover {background-color: #c1afa8;}
 
 		table, td, tr 
         {
 			
-		   border: solid 1px #050505;
+		   border: solid 1px gray;
            text-align: center;
         }
       
@@ -81,7 +58,11 @@ header::before {
 h1 {
 text-align: center;
   font-family: "Times New Roman", Times, serif;
-}    
+  
+  
+
+
+
 	</style>
 	
 
@@ -95,10 +76,10 @@ text-align: center;
 
 <script>
     var detailInfo = new function () {
-
+	console.log("Test");
         // Creating a json data for the required table.
         this.jsonData = [
-            { ID: '4', Name: 'Manoj', Address: 'Guntur', Mobile: '7013968556' },
+            { ID: '1', Name: 'Manoj', Address: 'Guntur', Mobile: '7013968556' },
             { ID: '2', Name: 'Kumar', Address: 'Sattenapalli', Mobile: '1234567890' },
             { ID: '3', Name: 'Reddy', Address: 'Chennai', Mobile: '98745632123' }
         ]
@@ -128,15 +109,14 @@ text-align: center;
                 // Add table header.
                 var th = document.createElement('th');
 				var btSort = document.createElement('button');
+				
 				btSort.innerText = 'Sort';
                 btSort.setAttribute('value', 'Sort '+this.col[h]);
                 //btSort.setAttribute('style', 'background-color:aqua;');
                 btSort.setAttribute('onclick', 'detailInfo.Sort(this)'); 
                 th.innerHTML = this.col[h];
 				th.appendChild(btSort);
-				
-				
-                tr.appendChild(th);
+				tr.appendChild(th);
             }
 		
 			
@@ -214,7 +194,7 @@ text-align: center;
                 this.td.appendChild(btDelete);
              
 				// **** Insert 
-				// unabe to create the next row
+			
 				var btNew = document.createElement('input');
 				this.td = document.createElement('td');
                 tr.appendChild(this.td);
@@ -231,7 +211,7 @@ text-align: center;
 
             // ADD A ROW AT THE END WITH BLANK TEXTBOXES (FOR NEW ENTRY).
 
-          /*  tr = table.insertRow(-1);           // CREATE THE LAST ROW.
+       /*   tr = table.insertRow(-1);           // CREATE THE LAST ROW.
 
             for (var j = 0; j < this.col.length; j++) {
                 var newCell = tr.insertCell(-1);
@@ -245,7 +225,7 @@ text-align: center;
                     }
             }
 
-          this.td = document.createElement('th');
+          this.td = document.createElement('td');
             tr.appendChild(this.td);
 
             var btNew = document.createElement('input');
@@ -253,16 +233,19 @@ text-align: center;
             btNew.setAttribute('type', 'button');       // SET ATTRIBUTES.
             btNew.setAttribute('value', 'Create');
             btNew.setAttribute('id', 'New' + i);
-            btNew.setAttribute('style', 'background-color:#207DD1;');
+            //btNew.setAttribute('style', 'background-color:#207DD1;');
             btNew.setAttribute('onclick', 'detailInfo.CreateNew(this)');       // ADD THE BUTTON's 'onclick' EVENT.
-            this.td.appendChild(btNew); */
-
+            this.td.appendChild(btNew); 
+*/
             var div = document.getElementById('Tablespace');
             div.innerHTML = '';
-            div.appendChild(table);    // ADD THE TABLE TO THE WEB PAGE.
+            div.appendChild(table);     // ADD THE TABLE TO THE WEB PAGE.
         };
 
         // ****** OPERATIONS START.
+		
+		
+	
 
         // CANCEL.
         this.Cancel = function (oButton) {
@@ -329,13 +312,16 @@ text-align: center;
 		//Sort function  
 			 this.Sort = function (oButton) {
 			 
-			   detailInfo.jsonData.sort(function (a, b) {
+			 detailInfo.jsonData.sort(function (a, b) {
 			  
 			   if(oButton.value == "Sort ID")
+			   
 			   	     return a.ID.localeCompare(b.ID);
+					
 			   else if(oButton.value == "Sort Name")
+			   
 		return a.Name.localeCompare(b.Name);
-			   else if(oButton.value == "Sort Address")
+		   else if(oButton.value == "Sort Address")
 			     return a.Address.localeCompare(b.Address);
 			   else if(oButton.value == "Sort Mobile")
 			      return a.Mobile.localeCompare(b.Mobile);
@@ -363,38 +349,15 @@ detailInfo.createTable(detailInfo.jsonData);
             this.createTable();     // REFRESH THE TABLE.
         }
 
-
+//INSERT
 			this.Insert = function (oButton) {
-            var activeRow = oButton.parentNode.parentNode.rowIndex;
-            var tab = document.getElementById('infoTable').rows[activeRow];
-            var obj = {};
+			 
+			 table = document.getElementById('infoTable');
+			tr = table.insertRow();           // CREATE THE LAST ROW.
 
-            // ADD NEW VALUE TO jsonData ARRAY.
-          for (i = 0; i < this.col.length; i++) {
-                var td = tab.getElementsByTagName("td")[i];
-                 {      
-                    var txtVal = td.childNodes[0].value;
-                    
-                }
-            }
-            obj[this.col[0]] = this.jsonData.length + 1;     // NEW ID.
-
-            if (Object.keys(obj).length > 0) {      // CHECK IF OBJECT IS NOT EMPTY.
-                this.jsonData.push(obj);             // PUSH (ADD) DATA TO THE JSON ARRAY.
-                this.createTable();                 // REFRESH THE TABLE.
-            }
-        }
-		
-		
-		
-
-        // CREATE NEW.
-        this.CreateNew = function (oButton) {
-		tr = table.insertRow(-1);         // CREATE THE LAST ROW.
-
-            for (var j = 0; j < this.col.length; j++) {
+            for (var j = 0; j <= this.col.length; j++) {
                 var newCell = tr.insertCell(-1);
-                if (j >= 1) {
+                if (j >= 1 && j<this.col.length) {
 
                     
                         var tBox = document.createElement('input');          // CREATE AND ADD A TEXTBOX.
@@ -403,6 +366,24 @@ detailInfo.createTable(detailInfo.jsonData);
                         newCell.appendChild(tBox);
                     }
             }
+			 var btNew = document.createElement('input');
+
+            btNew.setAttribute('type', 'button');       // SET ATTRIBUTES.
+            btNew.setAttribute('value', 'Create');
+            btNew.setAttribute('id', 'New');
+            //btNew.setAttribute('style', 'background-color:#207DD1;');
+            btNew.setAttribute('onclick', 'detailInfo.CreateNew(this)');       // ADD THE BUTTON's 'onclick' EVENT.
+            newCell.appendChild(btNew); 
+
+          this.td = document.createElement('td');
+            tr.appendChild(this.td);
+        }
+		
+		
+		
+
+        // CREATE NEW.
+        this.CreateNew = function (oButton) {
             var activeRow = oButton.parentNode.parentNode.rowIndex;
             var tab = document.getElementById('infoTable').rows[activeRow];
             var obj = {};
@@ -431,6 +412,7 @@ detailInfo.createTable(detailInfo.jsonData);
         }
 
         // ****** OPERATIONS END.
+		
     }
     detailInfo.createTable();
 </script>
