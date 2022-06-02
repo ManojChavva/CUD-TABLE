@@ -59,6 +59,18 @@ h1 {
 text-align: center;
   font-family: "Times New Roman", Times, serif;
   
+  .button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
   
 
 
@@ -112,8 +124,9 @@ text-align: center;
 				
 				btSort.innerText = 'Sort';
                 btSort.setAttribute('value', 'Sort '+this.col[h]);
-                //btSort.setAttribute('style', 'background-color:aqua;');
+             
                 btSort.setAttribute('onclick', 'detailInfo.Sort(this)'); 
+				btSort.setAttribute('size', '4px 2px'); 
                 th.innerHTML = this.col[h];
 				th.appendChild(btSort);
 				tr.appendChild(th);
@@ -353,7 +366,12 @@ detailInfo.createTable(detailInfo.jsonData);
 			this.Insert = function (oButton) {
 			 
 			 table = document.getElementById('infoTable');
-			tr = table.insertRow();           // CREATE THE LAST ROW.
+			 //var index = $('#table tr').index(tr);
+			 
+			 var indexRow = event.target.parentElement.parentElement.rowIndex; 
+			 console.log(indexRow);
+			tr = table.insertRow(indexRow+1);  			// CREATE THE positon  ROW.
+			//var index = $('#table tr').index(tr);
 
             for (var j = 0; j <= this.col.length; j++) {
                 var newCell = tr.insertCell(-1);
@@ -384,8 +402,12 @@ detailInfo.createTable(detailInfo.jsonData);
 
         // CREATE NEW.
         this.CreateNew = function (oButton) {
-            var activeRow = oButton.parentNode.parentNode.rowIndex;
+		 var indexRow = event.target.parentElement.parentElement.rowIndex; 
+			 console.log(indexRow);
+			tr = table.insertRow(indexRow);  	
+           var activeRow = oButton.parentNode.parentNode.rowIndex;
             var tab = document.getElementById('infoTable').rows[activeRow];
+			console.log(activeRow);
             var obj = {};
 
             // ADD NEW VALUE TO jsonData ARRAY.
@@ -416,6 +438,4 @@ detailInfo.createTable(detailInfo.jsonData);
     }
     detailInfo.createTable();
 </script>
-
-
 </html>
