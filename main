@@ -7,8 +7,7 @@
 
     <title>Assignment task</title>
     <style>
-	
-	@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
+
 
 
 
@@ -19,7 +18,6 @@ body {
 }
 
 
-}
 
    table 
         {
@@ -59,17 +57,7 @@ h1 {
 text-align: center;
   font-family: "Times New Roman", Times, serif;
   
-  .button {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
+
 }
   
 
@@ -328,16 +316,15 @@ text-align: center;
 			 detailInfo.jsonData.sort(function (a, b) {
 			  
 			   if(oButton.value == "Sort ID")
-			   
 			   	     return a.ID.localeCompare(b.ID);
-					
 			   else if(oButton.value == "Sort Name")
-			   
 		return a.Name.localeCompare(b.Name);
 		   else if(oButton.value == "Sort Address")
 			     return a.Address.localeCompare(b.Address);
 			   else if(oButton.value == "Sort Mobile")
 			      return a.Mobile.localeCompare(b.Mobile);
+				  else if(oButton.value == "Sort ID")
+				   return a.ID.localeCompare(b.ID);
 			   
   
 });
@@ -366,12 +353,10 @@ detailInfo.createTable(detailInfo.jsonData);
 			this.Insert = function (oButton) {
 			 
 			 table = document.getElementById('infoTable');
-			 //var index = $('#table tr').index(tr);
 			 
 			 var indexRow = event.target.parentElement.parentElement.rowIndex; 
-			 console.log(indexRow);
+			                                                  //console.log(indexRow);
 			tr = table.insertRow(indexRow+1);  			// CREATE THE positon  ROW.
-			//var index = $('#table tr').index(tr);
 
             for (var j = 0; j <= this.col.length; j++) {
                 var newCell = tr.insertCell(-1);
@@ -403,11 +388,12 @@ detailInfo.createTable(detailInfo.jsonData);
         // CREATE NEW.
         this.CreateNew = function (oButton) {
 		 var indexRow = event.target.parentElement.parentElement.rowIndex; 
-			 console.log(indexRow);
+		
 			tr = table.insertRow(indexRow);  	
            var activeRow = oButton.parentNode.parentNode.rowIndex;
             var tab = document.getElementById('infoTable').rows[activeRow];
-			console.log(activeRow);
+			
+			
             var obj = {};
 
             // ADD NEW VALUE TO jsonData ARRAY.
@@ -439,3 +425,5 @@ detailInfo.createTable(detailInfo.jsonData);
     detailInfo.createTable();
 </script>
 </html>
+
+
